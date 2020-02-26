@@ -24,10 +24,12 @@ get "/news" do
     @forecast = ForecastIO.forecast(@lat_long[0], @lat_long[1]).to_hash
     @current_temperature = @forecast["currently"]["temperature"]
     @conditions = @forecast["currently"]["summary"]
-    @forecast_array = @forecast["daily"]["data"]
-    @days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    @forecast_daily = @forecast["daily"]["data"]
+    # @forecast_array = @forecast["daily"]["data"]
+    # @days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
 
     @news = HTTParty.get(url).parsed_response.to_hash
+    # news_headline = news["articles"]
 
     view "ask"
     # "In #{@location}, it is currently #{@current_temperature} and #{@conditions}"

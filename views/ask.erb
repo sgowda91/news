@@ -19,19 +19,89 @@
     <link rel="stylesheet" href="/styles.css">
 
     <title>News</title>
-  </head>
-  <body>
+    
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="/">
+    <span style="font-size: 32px; color: black;">
+        <i class="fas fa-bolt"></i>
+    </span>
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div class="container mt-5">
-      <h1>News</h1>
-<p>
-     <%= "In #{@location}, it is currently #{@current_temperature} and #{@conditions}" %>
-</p>
-     <p>
-        <a href="/" class="btn btn-primary">Go Back</a>
-     </p>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0" action = "/news">
+      <input class="form-control mr-sm-2" type="text" name="q" placeholder="Enter City Here" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4" style = "text-align: center;">This week in <%= @location %> </h1>
+            <p class="lead" style = "text-align: center;"><%= "It is currently #{@current_temperature} and #{@conditions}" %></p>
+        </div>
     </div>
 
+  </head>
+  <body>
+<div class="container">
+  <div class="row">
+    <div class="col">
+         <div class="container mt-5">
+            <h1>Weather Forecast</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col">Day</th>
+                    <th scope="col">Day of week</th>
+                    <th scope="col">Forecast</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    <th scope="row">Today</th>
+                    <td><%= Time.at(@forecast_daily[0]["time"]).strftime("%a") %></td>
+                    <td> A high temperature of <%= @forecast_daily[0]["temperatureHigh"] %> and <%= @forecast_daily[0]["summary"] %></td>
+                    </tr>
+                    <tr>
+                    <th scope="row">Tomorrow</th>
+                    <td><%= Time.at(@forecast_daily[1]["time"]).strftime("%a") %></td>
+                    <td> A high temperature of <%= @forecast_daily[1]["temperatureHigh"] %> and <%= @forecast_daily[1]["summary"] %></td>
+                    </tr>
+                    <tr>
+                    <th scope="row">The Day After</th>
+                    <td><%= Time.at(@forecast_daily[2]["time"]).strftime("%a") %></td>
+                    <td> A high temperature of <%= @forecast_daily[2]["temperatureHigh"] %> and <%= @forecast_daily[2]["summary"] %></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col">
+        <div class="container mt-5">
+            <div data-spy="scroll" data-target="#navbar-example2" data-offset="0">
+                <h1>Today's U.S. News Headline</h1>
+                    <p>
+                        <% for headline in @news["articles"].slice(0,5) %>
+                            <ul>  
+                                <li> <a href=<%= headline["url"]%>><%= headline["title"] %></a> </li>
+                            </ul>
+                        <% end %>
+                    </p>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+        
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
