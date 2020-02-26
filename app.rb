@@ -23,7 +23,7 @@ get "/news" do
     @lat_long = results.first.coordinates # => [lat, long]
     @forecast = ForecastIO.forecast(@lat_long[0], @lat_long[1]).to_hash
     @current_temperature = @forecast["currently"]["temperature"]
-    @conditions = @forecast["currently"]["summary"]
+    @current_conditions = @forecast["currently"]["summary"]
     @forecast_daily = @forecast["daily"]["data"]
     # @forecast_array = @forecast["daily"]["data"]
     # @days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
